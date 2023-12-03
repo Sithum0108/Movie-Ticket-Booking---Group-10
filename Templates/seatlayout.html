@@ -374,16 +374,28 @@
     });
 
     // Dynamic date generation
+    // Function to get day name
+    function getDayName(dayIndex) {
+      const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      return daysOfWeek[dayIndex];
+    }
+
     let dates = document.querySelector(".dates");
-    for (let i = 1; i <= 7; i++) {
+    for (let i = 0; i < 7; i++) {
+      let currentDate = new Date();
+      currentDate.setDate(currentDate.getDate() + i);
+
+      let dayIndex = currentDate.getDay();
+      let dayName = getDayName(dayIndex);
+      let dateNumber = currentDate.getDate();
+
       dates.insertAdjacentHTML(
         "beforeend",
-        `<input type="radio" name="date" id="d${i}" ${
-          i === 1 ? "checked" : ""
-        } /><label class="dates-item" for="d${i}">
-            <div class="day">${getDayName(i)}</div>
-            <div class="date">${i}</div>
-          </label>`
+        `<input type="radio" name="date" id="d${i + 1}" ${i === 0 ? "checked" : ""
+        } /><label class="dates-item" for="d${i + 1}">
+      <div class="day">${dayName}</div>
+      <div class="date">${dateNumber}</div>
+    </label>`
       );
     }
 
@@ -422,12 +434,6 @@
         timeInput.nextElementSibling.classList.add("selected-time");
       });
     });
-
-    // Function to get day name
-    function getDayName(dayNumber) {
-      const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-      return days[dayNumber - 1];
-    }
 
     // Your existing JavaScript code
     document.getElementById("book-button").addEventListener("click", showBookingForm);
